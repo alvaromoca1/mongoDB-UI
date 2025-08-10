@@ -40,13 +40,13 @@ docker compose logs --tail=5
 
 # 6. Verificar conectividad
 echo -e "\n${YELLOW}6. Probando conectividad...${NC}"
-if curl -f http://localhost:9000/health > /dev/null 2>&1; then
+if curl -f http://localhost:9010/health > /dev/null 2>&1; then
     echo -e "${GREEN}✅ API respondiendo correctamente${NC}"
 else
     echo -e "${RED}❌ API no responde${NC}"
 fi
 
-if curl -f http://localhost:9001 > /dev/null 2>&1; then
+if curl -f http://localhost:9011 > /dev/null 2>&1; then
     echo -e "${GREEN}✅ Frontend respondiendo correctamente${NC}"
 else
     echo -e "${RED}❌ Frontend no responde${NC}"

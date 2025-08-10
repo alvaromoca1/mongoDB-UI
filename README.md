@@ -94,7 +94,7 @@ mongoDB-UI/
 - Docker y Docker Compose instalados
 - Git para clonar el repositorio
 - Acceso a internet para descargar imágenes
-- Puertos 9000, 9001 y 9002 disponibles
+- Puertos 9010, 9011 y 9012 disponibles
 
 ### **1. Clonar el Repositorio**
 ```bash
@@ -118,9 +118,9 @@ make docker-prod
 ```
 
 ### **4. Acceder a la Aplicación**
-- **Frontend**: http://localhost:9001
-- **API**: http://localhost:9000
-- **MongoDB**: localhost:9002
+- **Frontend**: http://localhost:9011
+- **API**: http://localhost:9010
+- **MongoDB**: localhost:9012
 
 ### **5. Auto-Restart**
 Los contenedores se reiniciarán automáticamente al arrancar el sistema si Docker está configurado para auto-inicio.
@@ -130,9 +130,9 @@ Los contenedores se reiniciarán automáticamente al arrancar el sistema si Dock
 ### **Puertos Únicos**
 Este proyecto está configurado para evitar conflictos con otros proyectos:
 
-- **API**: Puerto 9000 (evita conflictos con puertos estándar)
-- **Frontend**: Puerto 9001 (evita conflictos con puertos estándar)
-- **MongoDB**: Puerto 9002 (evita conflictos con MongoDB estándar)
+- **API**: Puerto 9010 (evita conflictos con puertos estándar)
+- **Frontend**: Puerto 9011 (evita conflictos con puertos estándar)
+- **MongoDB**: Puerto 9012 (evita conflictos con MongoDB estándar)
 
 ### **Nombres Únicos**
 - **Contenedores**: `mongodb-ui-api`, `mongodb-ui-web`, `mongodb-ui-mongo`
@@ -431,18 +431,18 @@ docker network connect mongodb-ui_appnet mi_contenedor
 #### **Verificar Conectividad**
 ```bash
 # Probar API
-curl -f http://localhost:9000/health
+curl -f http://localhost:9010/health
 
 # Probar Frontend
-curl -f http://localhost:9001
+curl -f http://localhost:9011
 
 # Probar MongoDB
 docker compose exec mongo mongosh --eval "db.adminCommand('ping')"
 
 # Verificar puertos en uso
-sudo lsof -i :9000
-sudo lsof -i :9001
-sudo lsof -i :9002
+sudo lsof -i :9010
+sudo lsof -i :9011
+sudo lsof -i :9012
 ```
 
 #### **Información del Sistema**
@@ -586,9 +586,9 @@ docker compose logs -f mongo
 
 1. **Puertos en Uso**:
 ```bash
-sudo lsof -i :9000  # Verificar puerto API
-sudo lsof -i :9001  # Verificar puerto Frontend
-sudo lsof -i :9002  # Verificar puerto MongoDB
+sudo lsof -i :9010  # Verificar puerto API
+sudo lsof -i :9011  # Verificar puerto Frontend
+sudo lsof -i :9012  # Verificar puerto MongoDB
 ```
 
 2. **Contenedores No Inician**:

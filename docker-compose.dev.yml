@@ -9,7 +9,7 @@ services:
     env_file:
       - .env
     ports:
-      - "0.0.0.0:9000:4000"  # API en puerto 9000
+      - "0.0.0.0:9010:4000"  # API en puerto 9010
     environment:
       - HOST=0.0.0.0
       - NODE_ENV=development
@@ -34,9 +34,9 @@ services:
     env_file:
       - .env
     ports:
-      - "0.0.0.0:9001:80"  # Frontend en puerto 9001
+      - "0.0.0.0:9011:80"  # Frontend en puerto 9011
     environment:
-      - VITE_API_URL=http://localhost:9000
+      - VITE_API_URL=http://localhost:9010
     depends_on:
       - api
     networks:
@@ -47,7 +47,7 @@ services:
     image: mongo:7
     restart: unless-stopped
     ports:
-      - "0.0.0.0:9002:27017"  # MongoDB en puerto 9002
+      - "0.0.0.0:9012:27017"  # MongoDB en puerto 9012
     volumes:
       - mongo_data:/data/db  # Datos persistentes
       - mongo_config:/data/configdb  # Configuración persistente
