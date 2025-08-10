@@ -1,0 +1,75 @@
+version: '3.9'
+
+services:
+  api:
+    build:
+      context: ./apps/api
+      dockerfile: Dockerfile.dev
+      target: dev
+    env_file:
+      - .env
+    ports:
+      - "0.0.0.0:9000:4000"  # API en puerto 9000
+    environment:
+      - HOST=0.0.0.0
+      - NODE_ENV=development
+    volumes:
+      - api_data:/data
+      - api_logs:/app/logs  # Volumen para logs
+      - ./apps/api/src:/app/src
+      - ./apps/api/package.json:/app/package.json
+      - ./apps/api/tsconfig.json:/app/tsconfig.json
+      - ./apps/api/tsconfig.build.json:/app/tsconfig.build.json
+    depends_on:
+      - mongo
+    networks:
+      - appnet
+    restart: unless-stopped
+
+  web:
+    build:
+      context: ./apps/web
+      dockerfile: Dockerfile
+    command: ["nginx", "-g", "daemon off;"]
+    env_file:
+      - .env
+    ports:
+      - "0.0.0.0:9001:80"  # Frontend en puerto 9001
+    environment:
+      - VITE_API_URL=http://localhost:9000
+    depends_on:
+      - api
+    networks:
+      - appnet
+    restart: unless-stopped
+
+  mongo:
+    image: mongo:7
+    restart: unless-stopped
+    ports:
+      - "0.0.0.0:9002:27017"  # MongoDB en puerto 9002
+    volumes:
+      - mongo_data:/data/db  # Datos persistentes
+      - mongo_config:/data/configdb  # Configuración persistente
+      - ./init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
+    environment:
+      - MONGO_INITDB_DATABASE=exampledb
+    networks:
+      - appnet
+
+volumes:
+  mongo_data:
+    driver: local
+  mongo_config:
+    driver: local
+  api_data:
+    driver: local
+  api_logs:
+    driver: local
+
+networks:
+  appnet:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16

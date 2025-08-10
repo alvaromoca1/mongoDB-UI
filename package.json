@@ -1,0 +1,41 @@
+{
+  "name": "mongodb-ui-monorepo",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Monorepo full-stack para gestor de MongoDB (tipo Compass) - apps/api y apps/web",
+  "packageManager": "yarn@1.22.22",
+  "scripts": {
+    "prepare": "husky install",
+    "dev": "yarn workspaces run dev",
+    "build": "yarn workspaces run build",
+    "start": "yarn workspaces run start",
+    "lint": "yarn workspaces run lint",
+    "format": "yarn workspaces run format",
+    "test": "yarn workspaces run test",
+    "e2e": "yarn workspaces run e2e"
+  },
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "devDependencies": {
+    "eslint": "^9.9.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-import": "^2.29.1",
+    "eslint-plugin-react": "^7.34.3",
+    "eslint-plugin-react-hooks": "^5.0.0",
+    "@typescript-eslint/eslint-plugin": "^8.3.0",
+    "@typescript-eslint/parser": "^8.3.0",
+    "husky": "^9.0.11",
+    "lint-staged": "^15.2.10",
+    "prettier": "^3.3.3",
+    "typescript": "^5.5.4"
+  },
+  "lint-staged": {
+    "**/*.{ts,tsx,js,jsx,json,css,md}": [
+      "prettier --write"
+    ]
+  }
+}
+
+

@@ -1,0 +1,14 @@
+FROM node:20-alpine AS deps
+WORKDIR /app
+RUN corepack enable && corepack prepare yarn@1.22.22 --activate
+COPY package.json yarn.lock* ./
+RUN yarn install --production=false --frozen-lockfile || yarn install --production=false
+
+FROM node:20-alpine AS dev
+WORKDIR /app
+COPY --from=deps /app/node_modules ./node_modules
+COPY package.json yarn.lock* ./
+RUN yarn add -D ts-node-dev
+
+EXPOSE 4000
+CMD ["yarn", "dev"]
